@@ -1,0 +1,40 @@
+name: CI Pipeline
+
+on: push
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      
+      - name: run bash command
+        run: bash -n status-check.sh
+        shell: bash
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      
+      - name: test execution
+        run: echo "Running tests" && exit 0
+  package:
+    needs: [validate, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      
+      - name: create zip file
+        run: |
+          mkdir -p reports
+          echo "Report" > reports/report.txt
+          zip -r report.zip reports/
+
+      - name: upload zip file
+        uses: actions/upload-artifact@v4
+        with:
+          name: report
+          path: report.zip
