@@ -1,0 +1,14 @@
+name: CI Pipeline
+
+on: 
+  push:
+    branches: 
+      - main 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: release
+        runs: echo "Deploying to $PROD_MAIN"
