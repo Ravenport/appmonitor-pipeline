@@ -11,4 +11,4 @@ jobs:
     environment: Production
     steps:
       - name: release
-        run: echo "Deploying to $PROD_MAIN"
+        run: echo "Deploying to $PROD_DOMAIN"
