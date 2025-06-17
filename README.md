@@ -1,7 +1,7 @@
 # appmonitor-pipeline
 at ci/cd Infnet
 
-Importancia do GIT
+Importância do GIT
 ------------------
 
 O git é uma ferramenta para versionamento de código que permite a entrega
