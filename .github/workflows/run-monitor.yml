@@ -1,0 +1,30 @@
+name: run-monitor
+
+on: push
+
+jobs:
+  env:
+    runs-on: ubuntu-latest
+    enviroment: AT - Ci/CD
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: env context
+        run: echo "Env: ${{ vars.APP_ENV }}"
+  var:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: var context
+        run: echo "Var - ${{ vars.SUPPORT_EMAIL }}"
+  secret:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: secret context
+        run: echo "Secret - ${{ secret.API_KEY }}"
