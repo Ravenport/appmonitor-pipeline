@@ -10,7 +10,13 @@ jobs:
         uses: actions/checkout@v4
       
       - name: run bash command
-        run: bash -n status-check.sh
+        run: |
+          if ! bash -n status-check.sh; then
+            echo "::error::Este é um erro de sintaxe no arquivo status-check.sh!"
+            exit 1
+          else
+            echo "::warning::Tem um aviso de sintaxe no arquivo status-check.sh!"
+          fi
         shell: bash
   test:
     runs-on: ubuntu-latest
@@ -23,6 +29,8 @@ jobs:
   package:
     needs: [validate, test]
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: true
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -38,3 +46,12 @@ jobs:
         with:
           name: report
           path: report.zip
+
+      - name: Job Summary
+        run: |
+          echo "=== Sumary ===" >> $GITHUB_STEP_SUMMARY
+          echo "OS - $RUNNER_OS" >> $GITHUB_STEP_SUMMARY
+          echo "BRANCH - $GITHUB_BRANCH" >> $GITHUB_STEP_SUMMARY
+        env:
+          RUNNER_OS: ${{ runner.os }}
+          GITHUB_BRANCH: ${{ github.ref_name }}
